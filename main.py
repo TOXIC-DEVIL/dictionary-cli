@@ -11,9 +11,11 @@ def getword():
   else:
     while True:
       arg = input('Enter your query: ')
-      if isinstance(arg, str):
+      if isinstance(arg, str) and arg.strip():
         break
-    return arg
+      else:
+        print("Please enter a valid word.")
+    return arg.strip()
 
 def main():
   getword()
