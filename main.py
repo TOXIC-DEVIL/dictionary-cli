@@ -1,5 +1,6 @@
 import requests
 import argparse
+from print_color import print
 
 def getword():
   argparser = argparse.ArgumentParser(description='Dictionary')
@@ -14,7 +15,7 @@ def getword():
       if isinstance(arg, str) and arg.strip():
         break
       else:
-        print('Please enter a valid word.')
+        print('Please enter a valid word.\n', color='red')
     return arg.strip()
 
 def main():
@@ -34,16 +35,17 @@ def main():
       if 'text' in ph:
         phonetics.append(ph['text'])
     for meaning in json['meanings']:
-      meaning_data = 'Part of Speech: ' + meaning['partOfSpeech'] + '\n' + 'Definition: ' + meaning['definitions'][0]['definition'] + '\n' + 'Example: ' + meaning['definitions'][0]['example']
+      meaning_data = 'Part of Speech: ' + meaning['partOfSpeech'] + '\n' + 'Definition: ' + meaning['definitions'][0]['definition']
+      if 'example' in meaning['definitions'][0]: meaning_data += '\nExample: ' + meaning['definitions'][0]['example']
       meanings.append(meaning_data)
     print(
-      'Word: ' + word + '\n' +
-      'Phonetics: ' + ', '.join(phonetics) + '\n' +
-      '--------------------------------'
+      '\nWord: ' + word + '\n' +
+      'Phonetics: ' + ', '.join(phonetics), color='white'
     )
+    print('--------------------------------', color='green')
     for meaning in meanings:
-      print(meaning)
-      print('--------------------------------')
+      print(meaning, color='white')
+      print('--------------------------------', color='green')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   main()
